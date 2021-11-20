@@ -14,13 +14,5 @@ if (isset($_POST['submit'])) {
 }
 
 
-if (isset($_POST['delete_submit'])) {
-	global $mysqli;
-	connectDB ();
-	$sql = "DELETE FROM users WHERE id=?";
-	$query = $pdo->prepare($sql);
-	$query->execute([$get_id]);
-		closeDB ();
-	header('Location: '. $_SERVER['HTTP_REFERER']);
-}
+
 ?>

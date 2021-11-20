@@ -9,7 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 	<?php
 		require_once"function.php";
-		$news = getProducts(3);
+		$req = getProducts(3);
 	?>
 </head>
 <body>
@@ -25,6 +25,7 @@
 
 <!-- Modal -->
 <?php require_once"products_crud.php";?>
+<?php require_once"edit.php";?>
 <div class="modal fade" id="create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -52,13 +53,14 @@
   </div>
 </div>
 <div class="content">
-	<?php foreach ($news as $key => $value) { ?>
+	<?php foreach ($req as $key => $value) { ?>
   			<div class="text">
-  					<a href="" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#update<?php echo $value[id] ?>" id="edit<?php echo $value[title] ?>"><i class="fa fa-edit"></i></a>
-  					<a type="submit" name="delete_submit" class="btn btn-success" ><i class="fa fa-trash-alt"></i></a>
+  					<a class="btn btn-success"  id="edit<?php echo $value[id] ?>" data-bs-toggle="modal" data-bs-target="#update<?php echo $value[id] ?>"><i class="fa fa-edit"></i></a>
+  					<a type="submit" name="delete_submit" class="btn delete btn-success" id="delete<?php echo $value[id]?>"><i class="fa fa-trash-alt"></i></a>
 					<h2><?php echo $value[title] ?></h2>
 					<p><?php echo $value[text] ?></p>
 			 </div>
+
 			 <!-- Modal  Update-->
 				<div class="modal fade" id="update<?php echo $value[id] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				  <div class="modal-dialog">
@@ -67,7 +69,7 @@
 				        <h5 class="modal-title" id="exampleModalLabel">Update products</h5>
 				                <button type="button" class="close" data-dismiss="modal">&times;</button>
 				      </div>
-				      <form action="" method="GET" id="add_form">
+				      <form action="?id=<?php echo $value[id] ?>" method="POST" id="add_form">
 				      <div class="modal-body">
 				        	<div class="mb-3">
 								  <label for="formControlInputTitle" class="form-label">Update title</label>
@@ -75,17 +77,26 @@
 							</div>
 							<div class="mb-3">
 								  <label for="formControlTextarea" class="form-label">Update text</label>
-								  <textarea class="form-control" id="formControlTextarea" rows="3" placeholder="add text" name='text' value="<?php echo $value[text] ?>"></textarea>
+								  <textarea class="form-control" id="formControlTextarea" rows="3" placeholder="<?php echo $value[text] ?>" name='text' value="<?php echo $value[text] ?>"></textarea>
 							</div>
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
-				        <button type="submit" class="btn btn-primary" name='submit'>Sand</button>
+				        <button type="submit" class="btn btn-primary" name='edit-submit'>Sand</button>
 				      </div>
 				  </form>
 				    </div>
 				  </div>
 				</div>
+					<script>
+			$(document).ready(function(){
+			    $("#edit<?php echo $value[id] ?>").click(function(){
+			        $("#update<?php echo $value[id] ?>").modal();
+			    });
+
+			});
+
+		</script>
 						<?php }?>
 </div>
 
