@@ -11,6 +11,7 @@
 		require_once"function.php";
 		$req = getProducts(3);
 	?>
+
 </head>
 <body>
 <?php include "header.php";?>
@@ -24,8 +25,7 @@
 </div>
 
 <!-- Modal -->
-<?php require_once"products_crud.php";?>
-<?php require_once"edit.php";?>
+<?php require_once"products_crud.php"; ?>
 <div class="modal fade" id="create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -52,11 +52,12 @@
     </div>
   </div>
 </div>
+
 <div class="content">
 	<?php foreach ($req as $key => $value) { ?>
   			<div class="text">
   					<a class="btn btn-success"  id="edit<?php echo $value[id] ?>" data-bs-toggle="modal" data-bs-target="#update<?php echo $value[id] ?>"><i class="fa fa-edit"></i></a>
-  					<a type="submit" name="delete_submit" class="btn delete btn-success" id="delete<?php echo $value[id]?>"><i class="fa fa-trash-alt"></i></a>
+  					<a type="submit" name="delete_submit" class="btn delete btn-success" id="delete<?php echo $value[id]?>" data-bs-toggle="modal" data-bs-target="#remove<?php echo $value[id] ?>"><i class="fa fa-trash-alt"></i></a>
 					<h2><?php echo $value[title] ?></h2>
 					<p><?php echo $value[text] ?></p>
 			 </div>
@@ -69,7 +70,7 @@
 				        <h5 class="modal-title" id="exampleModalLabel">Update products</h5>
 				                <button type="button" class="close" data-dismiss="modal">&times;</button>
 				      </div>
-				      <form action="?id=<?php echo $value[id] ?>" method="POST" id="add_form">
+				      <form action="?id=<?php echo $value[id] ?>" method="POST" id="updare_form">
 				      <div class="modal-body">
 				        	<div class="mb-3">
 								  <label for="formControlInputTitle" class="form-label">Update title</label>
@@ -82,22 +83,47 @@
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
-				        <button type="submit" class="btn btn-primary" name='edit-submit'>Sand</button>
+				        <button type="submit" class="btn btn-primary" name='edit_submit'>Sand</button>
 				      </div>
 				  </form>
 				    </div>
 				  </div>
 				</div>
+			<!-- Delete Modal -->
+
+				<div class="modal fade" id="remove<?php echo $value[id] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">Delete products</h5>
+				                <button type="button" class="close" data-dismiss="modal">&times;</button>
+				      </div>
+				      <form action="?id=<?php echo $value[id] ?>" method="POST" id="updare_form">
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+				        <button type="submit" class="btn btn-primary" name='delete_submit'>Delete</button>
+				      </div>
+				  </form>
+				    </div>
+				  </div>
+				</div>
+
 					<script>
 			$(document).ready(function(){
 			    $("#edit<?php echo $value[id] ?>").click(function(){
 			        $("#update<?php echo $value[id] ?>").modal();
 			    });
+			      $("#delete<?php echo $value[id] ?>").click(function(){
+			        $("#remove<?php echo $value[id] ?>").modal();
+			    });
 
 			});
 
+
 		</script>
+					
 						<?php }?>
+
 </div>
 
 
